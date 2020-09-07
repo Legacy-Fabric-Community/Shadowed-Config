@@ -1,7 +1,17 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
+    }
+}
 plugins {
     id 'maven-publish'
     id 'fabric-loom' version "0.4-SNAPSHOT"
 }
+
+apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -89,12 +99,17 @@ jar {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            // add all the jars that should be included when publishing to maven
             artifact(remapJar) {
                 builtBy remapJar
             }
             artifact(sourcesJar) {
                 builtBy remapSourcesJar
+            }
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('description', 'Library that includes DFU and Jankson')
+                root.appendNode('name', 'Shadowed-Config')
+                root.appendNode('url', 'https://github.com/Legacy-Fabric-Community/shadowed-config')
             }
         }
     }
@@ -103,5 +118,27 @@ publishing {
     repositories {
         // uncomment to publish to the local maven
         // mavenLocal()
+    }
+}
+
+bintray {
+    user = project.hasProperty('bintrayUser') ? project.property('bintrayUser') : System.getenv('BINTRAY_USER')
+    key = project.hasProperty('bintrayApiKey') ? project.property('bintrayApiKey') : System.getenv('BINTRAY_KEY')
+    publications = ["mavenJava"]
+    publish = true
+    pkg {
+        repo = "cool-mods"
+        name = "Shadowed-Config"
+        licenses = ["CC0-1.0"]
+        version {
+            released = new Date()
+            githubRepo = 'Legacy-Fabric-Community/shadowed-config'
+            websiteUrl = 'https://github.com/Legacy-Fabric-Community/shadowed-config'
+            issueTrackerUrl = 'https://github.com/Legacy-Fabric-Community/shadowed-config/issues'
+            vcsUrl = 'https://github.com/Legacy-Fabric-Community/shadowed-config.git'
+            gpg {
+                sign = true
+            }
+        }
     }
 }
