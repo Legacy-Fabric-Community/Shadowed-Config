@@ -45,6 +45,7 @@ minecraft {
     intermediaryUrl = {
         return "https://dl.bintray.com/legacy-fabric/Legacy-Fabric-Maven/net/fabricmc/intermediary/" + it + "/intermediary-" + it + "-v2.jar";
     }
+    accessWidener "src/main/resources/shadowedconfig.accesswidener"
 }
 
 dependencies {

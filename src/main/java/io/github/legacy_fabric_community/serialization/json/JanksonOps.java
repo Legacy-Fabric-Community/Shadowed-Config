@@ -1,4 +1,4 @@
-package io.github.legacy_fabric_community.serialization;
+package io.github.legacy_fabric_community.serialization.json;
 
 import blue.endless.jankson.JsonArray;
 import blue.endless.jankson.JsonElement;

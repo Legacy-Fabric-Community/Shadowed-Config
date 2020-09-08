@@ -1,0 +1,10 @@
+{
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "required": true,
+  "package": "io.github.legacy_fabric_community.serialization.mixin",
+  "mixins": [
+    "ListTagAccessor"
+  ]
+}
