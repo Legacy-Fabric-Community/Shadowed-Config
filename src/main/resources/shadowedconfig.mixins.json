@@ -5,6 +5,15 @@
   "required": true,
   "package": "io.github.legacy_fabric_community.serialization.mixin",
   "mixins": [
-    "ListTagAccessor"
+    "CompoundTagAccessor",
+    "EndTagAccessor",
+    "ListTagAccessor",
+    "NumberTagMixins$ByteTagMixin",
+    "NumberTagMixins$DoubleTagMixin",
+    "NumberTagMixins$FloatTagMixin",
+    "NumberTagMixins$IntTagMixin",
+    "NumberTagMixins$LongTagMixin",
+    "NumberTagMixins$ShortTagMixin",
+    "TagAccessor"
   ]
 }
