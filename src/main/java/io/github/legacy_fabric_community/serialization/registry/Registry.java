@@ -23,7 +23,7 @@ public class Registry<T> extends MutableRegistry<T> {
     private static final Map<Identifier, Supplier<?>> DEFAULT_ENTRIES = Maps.newLinkedHashMap();
     public static final MutableRegistry<MutableRegistry<?>> REGISTRIES = new Registry<>();
     protected static final Logger LOGGER = LogManager.getLogger();
-    protected final Int2ObjectBiMap<T> indexedEntries = new Int2ObjectBiMap<>(256);
+    protected final Int2ObjectArrayMap<T> indexedEntries = new Int2ObjectArrayMap<>(256);
     protected final BiMap<Identifier, T> entries = HashBiMap.create();
     protected Object[] randomEntries;
     private int nextId;

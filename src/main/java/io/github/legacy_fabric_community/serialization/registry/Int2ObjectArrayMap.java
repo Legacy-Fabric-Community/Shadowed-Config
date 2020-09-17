@@ -10,7 +10,7 @@ import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 
 @SuppressWarnings("unchecked")
-public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
+public class Int2ObjectArrayMap<K> implements IndexedIterable<K> {
     private static final Object empty = null;
     private K[] values;
     private int[] ids;
@@ -18,7 +18,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
     private int nextId;
     private int size;
 
-    public Int2ObjectBiMap(int i) {
+    public Int2ObjectArrayMap(int i) {
         i = (int) ((float) i / 0.8F);
         this.values = (K[]) Lists.<K>newArrayListWithCapacity(i).toArray();
         this.ids = new int[i];
