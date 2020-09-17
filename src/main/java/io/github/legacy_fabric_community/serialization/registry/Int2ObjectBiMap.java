@@ -3,7 +3,6 @@ package io.github.legacy_fabric_community.serialization.registry;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
-
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
@@ -20,7 +19,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
     private int size;
 
     public Int2ObjectBiMap(int i) {
-        i = (int)((float)i / 0.8F);
+        i = (int) ((float) i / 0.8F);
         this.values = (K[]) Lists.<K>newArrayListWithCapacity(i).toArray();
         this.ids = new int[i];
         this.idToValues = (K[]) Lists.<K>newArrayListWithCapacity(i).toArray();
@@ -46,7 +45,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
     }
 
     private int nextId() {
-        while(this.nextId < this.idToValues.length && this.idToValues[this.nextId] != null) {
+        while (this.nextId < this.idToValues.length && this.idToValues[this.nextId] != null) {
             ++this.nextId;
         }
 
@@ -62,7 +61,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
         this.nextId = 0;
         this.size = 0;
 
-        for(int j = 0; j < objects.length; ++j) {
+        for (int j = 0; j < objects.length; ++j) {
             if (objects[j] != null) {
                 this.put(objects[j], is[j]);
             }
@@ -73,7 +72,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
     public void put(K object, int i) {
         int j = Math.max(i, this.size + 1);
         int k;
-        if ((float)j >= (float)this.values.length * 0.8F) {
+        if ((float) j >= (float) this.values.length * 0.8F) {
             k = this.values.length << 1;
             while (k < 1) {
                 k <<= 1;
@@ -107,7 +106,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
 
     private int findIndex(@Nullable K object, int i) {
         int k;
-        for(k = i; k < this.values.length; ++k) {
+        for (k = i; k < this.values.length; ++k) {
             if (this.values[k] == object) {
                 return k;
             }
@@ -117,7 +116,7 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
             }
         }
 
-        for(k = 0; k < i; ++k) {
+        for (k = 0; k < i; ++k) {
             if (this.values[k] == object) {
                 return k;
             }
@@ -132,13 +131,13 @@ public class Int2ObjectBiMap<K> implements IndexedIterable<K> {
 
     private int findFree(int i) {
         int k;
-        for(k = i; k < this.values.length; ++k) {
+        for (k = i; k < this.values.length; ++k) {
             if (this.values[k] == empty) {
                 return k;
             }
         }
 
-        for(k = 0; k < i; ++k) {
+        for (k = 0; k < i; ++k) {
             if (this.values[k] == empty) {
                 return k;
             }

@@ -168,7 +168,7 @@ public class NbtOps implements DynamicOps<Tag> {
             return DataResult.error("mergeToList called with not a list: " + tag, tag);
         } else {
             Tag abstractListTag = createListTag((byte) (tag instanceof ListTag ? ((ListTag) tag).getElementType() : 0), tag2.getType());
-            if (abstractListTag instanceof ListTag){
+            if (abstractListTag instanceof ListTag) {
                 fill((ListTag) abstractListTag, tag, tag2);
             }
             return DataResult.success(abstractListTag);
@@ -180,7 +180,7 @@ public class NbtOps implements DynamicOps<Tag> {
             return DataResult.error("mergeToList called with not a list: " + tag, tag);
         } else {
             Tag abstractListTag = createListTag(tag instanceof ListTag ? (byte) ((ListTag) tag).getElementType() : (byte) 0, list.stream().findFirst().map(Tag::getType).orElse((byte) 0));
-            if (abstractListTag instanceof ListTag){
+            if (abstractListTag instanceof ListTag) {
                 fillAll((ListTag) abstractListTag, tag, list);
             }
             return DataResult.success(abstractListTag);

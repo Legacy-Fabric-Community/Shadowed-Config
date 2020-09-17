@@ -32,12 +32,16 @@ repositories {
         url = 'http://repo.spongepowered.org/maven'
     }
     maven {
-        name = 'mojang'
+        name = 'Mojang'
         url = 'https://libraries.minecraft.net/'
     }
     maven {
         name = 'legacy-fabric'
         url = 'https://dl.bintray.com/legacy-fabric/Legacy-Fabric-Maven'
+    }
+    maven {
+        name = 'Jitpack'
+        url = 'https://jitpack.io'
     }
 }
 

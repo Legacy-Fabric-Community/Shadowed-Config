@@ -4,7 +4,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
-
 import javax.annotation.Nullable;
 
 import net.minecraft.util.Identifier;

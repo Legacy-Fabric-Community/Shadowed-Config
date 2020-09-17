@@ -1,16 +1,15 @@
 package io.github.legacy_fabric_community.serialization.json;
 
-import blue.endless.jankson.JsonArray;
-import blue.endless.jankson.JsonElement;
-import blue.endless.jankson.JsonNull;
-import blue.endless.jankson.JsonObject;
-import blue.endless.jankson.JsonPrimitive;
-
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+import blue.endless.jankson.JsonArray;
+import blue.endless.jankson.JsonElement;
+import blue.endless.jankson.JsonNull;
+import blue.endless.jankson.JsonObject;
+import blue.endless.jankson.JsonPrimitive;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
@@ -34,10 +33,10 @@ public class JanksonOps implements DynamicOps<JsonElement> {
     @Override
     public <U> U convertTo(DynamicOps<U> outOps, JsonElement input) {
         if (input instanceof JsonObject) {
-            return convertMap(outOps, input);
+            return this.convertMap(outOps, input);
         }
         if (input instanceof JsonArray) {
-            return convertList(outOps, input);
+            return this.convertList(outOps, input);
         }
         if (input instanceof JsonNull) {
             return outOps.empty();
@@ -132,12 +131,12 @@ public class JanksonOps implements DynamicOps<JsonElement> {
 
     @Override
     public DataResult<JsonElement> mergeToList(JsonElement list, JsonElement value) {
-        if (!(list instanceof JsonArray) && list != empty()) {
+        if (!(list instanceof JsonArray) && list != this.empty()) {
             return DataResult.error("mergeToList called with not a list: " + list, list);
         }
 
         final JsonArray result = new JsonArray();
-        if (list != empty()) {
+        if (list != this.empty()) {
             result.addAll(JanksonUtils.getAsJsonArray(list));
         }
         result.add(value);
@@ -146,7 +145,7 @@ public class JanksonOps implements DynamicOps<JsonElement> {
 
     @Override
     public DataResult<JsonElement> mergeToMap(JsonElement map, JsonElement key, JsonElement value) {
-        if (!(map instanceof JsonObject) && map != empty()) {
+        if (!(map instanceof JsonObject) && map != this.empty()) {
             return DataResult.error("mergeToMap called with not a map: " + map, map);
         }
         if (!(key instanceof JsonPrimitive) || !(JanksonUtils.getAsJsonPrimitive(key).getValue() instanceof String) && !this.compressed) {
@@ -154,7 +153,7 @@ public class JanksonOps implements DynamicOps<JsonElement> {
         }
 
         final JsonObject output = new JsonObject();
-        if (map != empty()) {
+        if (map != this.empty()) {
             JanksonUtils.getAsJsonObject(map).forEach(output::put);
         }
         output.put(String.valueOf(((JsonPrimitive) key).getValue()), value);
@@ -164,12 +163,12 @@ public class JanksonOps implements DynamicOps<JsonElement> {
 
     @Override
     public DataResult<JsonElement> mergeToMap(JsonElement map, MapLike<JsonElement> values) {
-        if (!(map instanceof JsonObject) && map != empty()) {
+        if (!(map instanceof JsonObject) && map != this.empty()) {
             return DataResult.error("mergeToMap called with not a map: " + map, map);
         }
 
         final JsonObject output = new JsonObject();
-        if (map != empty()) {
+        if (map != this.empty()) {
             JanksonUtils.getAsJsonObject(map).forEach(output::put);
         }
 
