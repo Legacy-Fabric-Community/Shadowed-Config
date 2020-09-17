@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.util.Identifier;
 
 @SuppressWarnings("unchecked")
-public class Registry<T> extends MutableRegistry<T> {
+public class Registry<T> implements MutableRegistry<T> {
     private static final Map<Identifier, Supplier<?>> DEFAULT_ENTRIES = Maps.newLinkedHashMap();
     public static final MutableRegistry<MutableRegistry<?>> REGISTRIES = new Registry<>();
     protected static final Logger LOGGER = LogManager.getLogger();
