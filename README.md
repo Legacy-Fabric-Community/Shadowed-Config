@@ -2,8 +2,6 @@
 Includes Jankson and DFU and provides a jankson serializer, so you don't have to!
 
 ## Setup
-**This is a temperory setup until everything is pushed to a single repository**  
-
 Add the repository
 ```gradle
 repositories {
