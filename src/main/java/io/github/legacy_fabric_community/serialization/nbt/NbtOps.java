@@ -12,6 +12,7 @@ import java.util.stream.IntStream;
 import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
+import io.github.legacy_fabric_community.serialization.codec.ExtendedOps;
 import io.github.legacy_fabric_community.serialization.mixin.CompoundTagAccessor;
 import io.github.legacy_fabric_community.serialization.mixin.EndTagAccessor;
 import io.github.legacy_fabric_community.serialization.mixin.ListTagAccessor;
@@ -42,9 +43,9 @@ import net.minecraft.nbt.ShortTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 
-public class NbtOps implements DynamicOps<Tag> {
+public class NbtOps implements ExtendedOps<Tag> {
     public static final NbtOps INSTANCE = new NbtOps();
-    private static final EndTag THE_END_TAG = EndTagAccessor.create();
+    static final EndTag THE_END_TAG = EndTagAccessor.create();
 
     private NbtOps() {
     }
@@ -288,7 +289,7 @@ public class NbtOps implements DynamicOps<Tag> {
     }
 
     public DataResult<ByteBuffer> getByteBuffer(Tag tag) {
-        return tag instanceof ByteArrayTag ? DataResult.success(ByteBuffer.wrap(((ByteArrayTag) tag).getArray())) : DynamicOps.super.getByteBuffer(tag);
+        return tag instanceof ByteArrayTag ? DataResult.success(ByteBuffer.wrap(((ByteArrayTag) tag).getArray())) : ExtendedOps.super.getByteBuffer(tag);
     }
 
     public Tag createByteList(ByteBuffer byteBuffer) {
@@ -296,7 +297,7 @@ public class NbtOps implements DynamicOps<Tag> {
     }
 
     public DataResult<IntStream> getIntStream(Tag tag) {
-        return tag instanceof IntArrayTag ? DataResult.success(Arrays.stream(((IntArrayTag) tag).getIntArray())) : DynamicOps.super.getIntStream(tag);
+        return tag instanceof IntArrayTag ? DataResult.success(Arrays.stream(((IntArrayTag) tag).getIntArray())) : ExtendedOps.super.getIntStream(tag);
     }
 
     public Tag createIntList(IntStream intStream) {
@@ -304,7 +305,7 @@ public class NbtOps implements DynamicOps<Tag> {
     }
 
     public DataResult<LongStream> getLongStream(Tag tag) {
-        return tag instanceof LongArrayTag ? DataResult.success(Arrays.stream(((LongArrayTag) tag).getArray())) : DynamicOps.super.getLongStream(tag);
+        return tag instanceof LongArrayTag ? DataResult.success(Arrays.stream(((LongArrayTag) tag).getArray())) : ExtendedOps.super.getLongStream(tag);
     }
 
     public Tag createLongList(LongStream longStream) {
