@@ -16,7 +16,6 @@ import io.github.legacy_fabric_community.serialization.mixin.CompoundTagAccessor
 import io.github.legacy_fabric_community.serialization.mixin.EndTagAccessor;
 import io.github.legacy_fabric_community.serialization.mixin.ListTagAccessor;
 import io.github.legacy_fabric_community.serialization.mixin.TagAccessor;
-import com.google.common.annotations.Beta;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -43,9 +42,7 @@ import net.minecraft.nbt.ShortTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
 
-@Beta
 public class NbtOps implements DynamicOps<Tag> {
-    @Beta
     public static final NbtOps INSTANCE = new NbtOps();
     private static final EndTag THE_END_TAG = EndTagAccessor.create();
 

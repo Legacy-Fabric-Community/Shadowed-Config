@@ -124,11 +124,12 @@ public class Registry<T> implements MutableRegistry<T>, Codec<T> {
     // TODO: Lifecycles for each registry entry
     @Override
     public <T1> DataResult<Pair<T, T1>> decode(DynamicOps<T1> ops, T1 input) {
-        if (ops.compressMaps())
+        if (ops.compressMaps()) {
             return ops.getNumberValue(input).flatMap(number -> {
                 T object = this.get(number.intValue());
                 return (object == null) ? DataResult.error("Unknown registry id: " + number) : DataResult.success(object, Lifecycle.stable());
             }).map(object -> Pair.of(object, ops.empty()));
+        }
         return RegistryCodecs.IDENTIFIER.decode(ops, input).flatMap(pair -> {
             T object = this.get(pair.getFirst());
             return (object == null) ? DataResult.error("Unknown registry key: " + pair.getFirst()) : DataResult.success(Pair.of(object, pair.getSecond()), Lifecycle.stable());

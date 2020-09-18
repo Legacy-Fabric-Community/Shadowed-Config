@@ -1,4 +1,4 @@
-package io.github.legacy_fabric_community.serialization.mixin;
+package io.github.legacy_fabric_community.serialization.mixin.mixin;
 
 import io.github.legacy_fabric_community.serialization.nbt.NumericTag;
 import org.spongepowered.asm.mixin.Mixin;
