@@ -1,5 +1,6 @@
 package io.github.legacy_fabric_community.serialization.nbt;
 
+import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -122,7 +123,21 @@ public class NbtOps implements ExtendedOps<Tag> {
     }
 
     public Tag createNumeric(Number number) {
-        return new DoubleTag(number.doubleValue());
+        if (number instanceof Integer) {
+            return this.createInt(number.intValue());
+        } else if (number instanceof Float) {
+            return this.createFloat(number.floatValue());
+        } else if (number instanceof Byte) {
+            return this.createByte(number.byteValue());
+        } else if (number instanceof Long) {
+            return this.createLong(number.longValue());
+        } else if (number instanceof Short) {
+            return this.createShort(number.shortValue());
+        } else if (number instanceof Double) {
+            return this.createDouble(number.doubleValue());
+        } else {
+            throw new UnsupportedOperationException("Only Primitive Numbers are supported!");
+        }
     }
 
     public Tag createByte(byte b) {
