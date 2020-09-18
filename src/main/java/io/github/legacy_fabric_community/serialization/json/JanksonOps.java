@@ -10,13 +10,15 @@ import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.JsonNull;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.JsonPrimitive;
+import io.github.legacy_fabric_community.serialization.codec.ExtendedOps;
+import io.github.legacy_fabric_community.serialization.codec.SetBuilder;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapLike;
 
-public class JanksonOps implements DynamicOps<JsonElement> {
+public class JanksonOps implements ExtendedOps<JsonElement> {
     public static final JanksonOps INSTANCE = new JanksonOps(false);
     public static final JanksonOps COMPRESSED = new JanksonOps(true);
     private final boolean compressed;
