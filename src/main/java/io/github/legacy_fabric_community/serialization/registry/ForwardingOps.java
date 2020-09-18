@@ -200,6 +200,11 @@ public abstract class ForwardingOps<T> implements ExtendedOps<T> {
     }
 
     @Override
+    public DataResult<Consumer<Consumer<T>>> getSet(T input) {
+        return this.delegate.getSet(input);
+    }
+
+    @Override
     public RecordBuilder<T> mapBuilder() {
         return this.delegate.mapBuilder();
     }
