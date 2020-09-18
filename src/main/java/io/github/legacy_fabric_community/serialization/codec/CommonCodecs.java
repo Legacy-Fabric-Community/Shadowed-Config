@@ -1,4 +1,4 @@
-package io.github.legacy_fabric_community.serialization;
+package io.github.legacy_fabric_community.serialization.codec;
 
 import io.github.legacy_fabric_community.serialization.math.Vec2f;
 import io.github.legacy_fabric_community.serialization.nbt.NbtOps;
@@ -31,6 +31,11 @@ public interface CommonCodecs {
             Codec.DOUBLE.fieldOf("z").forGetter((vec) -> vec.z)
     ).apply(instance, Vec3d::new));
 
+    /**
+     * Please use {@link RegistryCodecs#IDENTIFIER} instead as it
+     * uses only a single String instead of an Object.
+     */
+    @Deprecated
     Codec<Identifier> IDENTIFIER = RecordCodecBuilder.create((instance) -> instance.group(
             Codec.STRING.fieldOf("namespace").forGetter((identifier) -> identifier.toString().split(":")[0]),
             Codec.STRING.fieldOf("path").forGetter(Identifier::getPath)
