@@ -2,15 +2,7 @@
 Includes Jankson and DFU and provides a jankson serializer, so you don't have to!
 
 ## Setup
-Add the repository
-```gradle
-repositories {
-    maven {
-        url = 'https://dl.bintray.com/boogiemonster1o1/cool-mods/'
-    }
-}
-```
-
+Shadowed Config is on the JCenter. Loom automatically adds it as a repository. 
 
 Add the dependency 
 ```gradle
@@ -20,7 +12,7 @@ dependencies {
 }
 ```
 
-Find the latest version at [http://dl.bintray.com/boogiemonster1o1/cool-mods/io/github/legacy-fabric-community/shadowedconfig/](http://dl.bintray.com/boogiemonster1o1/cool-mods/io/github/legacy-fabric-community/shadowedconfig/)
+Find the latest version at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config)
 
 ## License
 
