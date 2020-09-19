@@ -10,8 +10,15 @@ import net.minecraft.nbt.FloatTag;
 import net.minecraft.nbt.IntTag;
 import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.ShortTag;
+import net.minecraft.nbt.Tag;
 
 public class NumberTagMixins {
+    @Mixin(Tag.NumberTag.class)
+    public static abstract class NumberTagMixin implements NumericTag {
+        @Override
+        public abstract Number getNumber();
+    }
+
     @Mixin(ShortTag.class)
     public static class ShortTagMixin implements NumericTag {
         @Shadow

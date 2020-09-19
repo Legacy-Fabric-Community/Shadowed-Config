@@ -11,12 +11,13 @@
     "EndTagAccessor",
     "ListTagAccessor",
     "TagAccessor",
-    "mixin.SimpleRegistryMixin",
     "mixin.NumberTagMixins$ByteTagMixin",
     "mixin.NumberTagMixins$DoubleTagMixin",
     "mixin.NumberTagMixins$FloatTagMixin",
     "mixin.NumberTagMixins$IntTagMixin",
     "mixin.NumberTagMixins$LongTagMixin",
-    "mixin.NumberTagMixins$ShortTagMixin"
+    "mixin.NumberTagMixins$NumberTagMixin",
+    "mixin.NumberTagMixins$ShortTagMixin",
+    "mixin.SimpleRegistryMixin"
   ]
 }
