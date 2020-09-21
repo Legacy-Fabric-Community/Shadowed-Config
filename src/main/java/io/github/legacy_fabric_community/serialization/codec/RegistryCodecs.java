@@ -50,31 +50,50 @@ public interface RegistryCodecs {
         }
 
         private static DataResult<Item> toItem(Identifier id) {
+            if (Item.REGISTRY.get(id) == null) {
+                return DataResult.error("Id not present in Item Registry: " + id.toString());
+            }
             return DataResult.success(Objects.requireNonNull(Item.REGISTRY.get(id)));
         }
 
         private static DataResult<Block> toBlock(Identifier id) {
+            if (Block.REGISTRY.get(id) == null) {
+                return DataResult.error("Id not present in Block Registry: " + id.toString());
+            }
             return DataResult.success(Objects.requireNonNull(Block.REGISTRY.get(id)));
         }
 
         private static DataResult<Class<? extends Entity>> toEntity(String name) {
+            if (!EntityTypeAccessor.getNameClassMap().containsKey(name)) {
+                return DataResult.error("Name not present in Entity Registry: " + name);
+            }
             return DataResult.success(Objects.requireNonNull(EntityTypeAccessor.getNameClassMap().get(name)));
         }
 
         private static DataResult<Class<? extends BlockEntity>> toBlockEntity(String name) {
+            if (!BE_STRING_CLASS_MAP.containsKey(name)) {
+                return DataResult.error("Name not present in Block Entity Registry: " + name);
+            }
             return DataResult.success(Objects.requireNonNull(BE_STRING_CLASS_MAP.get(name)));
         }
 
         private static DataResult<Biome> toBiome(String name) {
+            if (!BIOME_STRING_OBJECT_MAP.containsKey(name)) {
+                return DataResult.error("Name not present in Biome Registry: " + name);
+            }
             return DataResult.success(Objects.requireNonNull(BIOME_STRING_OBJECT_MAP.get(name)));
         }
 
+        // TODO: error if name doesn't exist in either one of the maps
         private static DataResult<ServerWorld> toWorld(String name) {
             return DataResult.success(Objects.requireNonNull(DIM_OBJECT_WORLD_MAP.get(DIM_STRING_OBJECT_MAP.get(name))));
         }
 
         private static DataResult<Character> toCharacter(String name) {
-            return DataResult.success(String.valueOf(name).charAt(0));
+            if (name == null) {
+                return DataResult.error("Name was null");
+            }
+            return DataResult.success(name.charAt(0));
         }
 
         static {
