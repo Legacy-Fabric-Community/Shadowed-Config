@@ -11,8 +11,8 @@ dependencies {
     include "io.github.legacy-fabric-community:shadowedconfig:<the latest version>"
 }
 ```
-
-Find the latest version at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config)
+[ ![Download](https://api.bintray.com/packages/boogiemonster1o1/cool-mods/Shadowed-Config/images/download.svg) ](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config/_latestVersion)  
+Find all versions at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config)
 
 ## License
 
