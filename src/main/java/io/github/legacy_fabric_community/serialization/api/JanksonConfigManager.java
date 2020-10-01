@@ -9,29 +9,27 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.impl.SyntaxError;
 import io.github.legacy_fabric_community.serialization.json.JanksonOps;
 import com.mojang.serialization.Codec;
 
 public class JanksonConfigManager<T> extends ConfigManager<T> {
     private static final Jankson JANKSON = Jankson.builder().build();
-    @Nullable
-    private DummyConfig dummyValueClazz = null;
-    @Nullable
-    private String defaultValue = null;
+    private T defaultValue = null;
 
-    protected JanksonConfigManager(Path configPath, Codec<T> codec) {
+    private JanksonConfigManager(Path configPath, Codec<T> codec) {
         super(configPath, codec);
     }
 
-    protected JanksonConfigManager(Path configPath, Codec<T> codec, @Nonnull DummyConfig dummyValueClazz) {
-        this(configPath, codec);
-        this.dummyValueClazz = Objects.requireNonNull(dummyValueClazz);
-    }
-
-    protected JanksonConfigManager(Path configPath, Codec<T> codec, @Nonnull String defaultValue) {
+    protected JanksonConfigManager(Path configPath, Codec<T> codec, T defaultValue) {
         this(configPath, codec);
         this.defaultValue = Objects.requireNonNull(defaultValue);
+    }
+
+    protected JanksonConfigManager(Path configPath, Codec<T> codec, JsonObject defaultValue) {
+        this(configPath, codec);
+        this.defaultValue = codec.decode(JanksonOps.INSTANCE, Objects.requireNonNull(defaultValue)).getOrThrow(false, PRINT_TO_STDERR).getFirst();
     }
 
     @Override
@@ -57,7 +55,7 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
     @Override
     public void deserialize() throws IOException {
         try {
-            this.config = this.codec.decode(JanksonOps.INSTANCE, JANKSON.load(this.configPath.toFile())).getOrThrow(false, PRINT_TO_STDERR).getFirst();
+            this.config = this.codec.decode(JanksonOps.INSTANCE, JANKSON.load(Files.newInputStream(this.configPath))).getOrThrow(false, PRINT_TO_STDERR).getFirst();
         } catch (SyntaxError syntaxError) {
             throw new IOException(syntaxError);
         }
@@ -66,10 +64,8 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
     @Override
     protected void writeDefaultData() throws IOException {
         byte[] bytes = "{}".getBytes(StandardCharsets.UTF_8);
-        if (this.dummyValueClazz != null) {
-            bytes = JANKSON.toJson(this.dummyValueClazz).toJson(true, true).getBytes(StandardCharsets.UTF_8);
-        } else if (this.defaultValue != null) {
-            bytes = this.defaultValue.getBytes(StandardCharsets.UTF_8);
+        if (this.defaultValue != null) {
+            bytes = JanksonOps.INSTANCE.withEncoder(this.codec).apply(this.defaultValue).getOrThrow(false, PRINT_TO_STDERR).toJson(true, true).getBytes(StandardCharsets.UTF_8);
         }
         Files.write(this.configPath, bytes);
     }

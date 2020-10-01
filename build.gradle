@@ -9,6 +9,7 @@ buildscript {
 plugins {
     id 'maven-publish'
     id 'fabric-loom' version "0.4-SNAPSHOT"
+    id 'com.github.johnrengelman.shadow' version '6.0.0'
 }
 
 apply plugin: 'com.jfrog.bintray'
@@ -52,6 +53,13 @@ minecraft {
     accessWidener "src/main/resources/shadowedconfig.accesswidener"
 }
 
+configurations {
+    shade
+}
+
+tasks.remapJar.dependsOn(shadowJar)
+(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
+
 dependencies {
     implementation "com.google.guava:guava:23.5-jre"
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -59,13 +67,18 @@ dependencies {
     modImplementation ("net.fabricmc:fabric-loader-1.8.9:${project.loader_version}") {
         exclude module: "guava"
     }
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.7.3"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.8.2"
 
-    modApi "com.mojang:datafixerupper:4.0.26"
-    include "com.mojang:datafixerupper:4.0.26"
-    modApi "blue.endless:jankson:1.1.0"
-    include "blue.endless:jankson:1.1.0"
-    include 'it.unimi.dsi:fastutil:7.1.0'
+    modImplementation("com.mojang:datafixerupper:4.0.26") {
+        exclude group: 'com.google.code.findbugs'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.google.guava'
+        exclude group: 'org.apache.commons'
+    }
+    shade "com.mojang:datafixerupper:4.0.26"
+    modImplementation "blue.endless:jankson:1.1.0"
+    shade "blue.endless:jankson:1.1.0"
+    shade 'it.unimi.dsi:fastutil:7.1.0'
 }
 
 processResources {
@@ -146,4 +159,17 @@ bintray {
             }
         }
     }
+}
+
+shadowJar {
+    dependencies {
+        exclude(dependency('com.mojang:minecraft:.*'))
+        exclude(dependency('net.fabricmc:.*:.*'))
+        exclude(dependency('com.google.code.findbugs:.*:.*'))
+        exclude(dependency('com.google.code.gson:.*:.*'))
+        exclude(dependency('com.google.guava:.*:.*'))
+        exclude(dependency('org.apache.commons:.*:.*'))
+        exclude(dependency('org.apache.logging.log4j:.*:.*'))
+    }
+    configurations = [project.configurations.shade]
 }

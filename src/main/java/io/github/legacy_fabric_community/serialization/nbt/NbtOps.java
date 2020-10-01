@@ -1,12 +1,15 @@
 package io.github.legacy_fabric_community.serialization.nbt;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
@@ -43,6 +46,8 @@ import net.minecraft.nbt.LongTag;
 import net.minecraft.nbt.ShortTag;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.Tag;
+
+import net.fabricmc.fabric.api.util.NbtType;
 
 public class NbtOps implements ExtendedOps<Tag> {
     public static final NbtOps INSTANCE = new NbtOps();
@@ -87,31 +92,31 @@ public class NbtOps implements ExtendedOps<Tag> {
 
     public <U> U convertTo(DynamicOps<U> dynamicOps, Tag tag) {
         switch (tag.getType()) {
-            case 0:
+            case NbtType.END:
                 return dynamicOps.empty();
-            case 1:
+            case NbtType.BYTE:
                 return dynamicOps.createByte(((Tag.NumberTag) tag).getByte());
-            case 2:
+            case NbtType.SHORT:
                 return dynamicOps.createShort(((Tag.NumberTag) tag).getShort());
-            case 3:
+            case NbtType.INT:
                 return dynamicOps.createInt(((Tag.NumberTag) tag).getInt());
-            case 4:
+            case NbtType.LONG:
                 return dynamicOps.createLong(((Tag.NumberTag) tag).getLong());
-            case 5:
+            case NbtType.FLOAT:
                 return dynamicOps.createFloat(((Tag.NumberTag) tag).getFloat());
-            case 6:
+            case NbtType.DOUBLE:
                 return dynamicOps.createDouble(((Tag.NumberTag) tag).getDouble());
-            case 7:
+            case NbtType.BYTE_ARRAY:
                 return dynamicOps.createByteList(ByteBuffer.wrap(((ByteArrayTag) tag).getArray()));
-            case 8:
+            case NbtType.STRING:
                 return dynamicOps.createString(((TagAccessor) tag).invokeAsString());
-            case 9:
+            case NbtType.LIST:
                 return this.convertList(dynamicOps, tag);
-            case 10:
+            case NbtType.COMPOUND:
                 return this.convertMap(dynamicOps, tag);
-            case 11:
+            case NbtType.INT_ARRAY:
                 return dynamicOps.createIntList(Arrays.stream(((IntArrayTag) tag).getIntArray()));
-            case 12:
+            case NbtType.LONG_ARRAY:
                 return dynamicOps.createLongList(Arrays.stream(((LongArrayTag) tag).getArray()));
             default:
                 throw new IllegalStateException("Unknown tag type: " + tag);
@@ -123,17 +128,17 @@ public class NbtOps implements ExtendedOps<Tag> {
     }
 
     public Tag createNumeric(Number number) {
-        if (number instanceof Integer) {
+        if (number instanceof Integer || number instanceof BigInteger || number instanceof AtomicInteger) {
             return this.createInt(number.intValue());
         } else if (number instanceof Float) {
             return this.createFloat(number.floatValue());
         } else if (number instanceof Byte) {
             return this.createByte(number.byteValue());
-        } else if (number instanceof Long) {
+        } else if (number instanceof Long || number instanceof AtomicLong) {
             return this.createLong(number.longValue());
         } else if (number instanceof Short) {
             return this.createShort(number.shortValue());
-        } else if (number instanceof Double) {
+        } else if (number instanceof Double || number instanceof BigDecimal) {
             return this.createDouble(number.doubleValue());
         } else {
             throw new UnsupportedOperationException("Only Primitive Numbers are supported!");
@@ -180,11 +185,11 @@ public class NbtOps implements ExtendedOps<Tag> {
         if (!(tag instanceof ListTag) && !(tag instanceof EndTag)) {
             return DataResult.error("mergeToList called with not a list: " + tag, tag);
         } else {
-            Tag abstractListTag = createListTag((byte) (tag instanceof ListTag ? ((ListTag) tag).getElementType() : 0), tag2.getType());
-            if (abstractListTag instanceof ListTag) {
-                fill((ListTag) abstractListTag, tag, tag2);
+            Tag listTag = createListTag((byte) (tag instanceof ListTag ? ((ListTag) tag).getElementType() : 0), tag2.getType());
+            if (listTag instanceof ListTag) {
+                fill((ListTag) listTag, tag, tag2);
             }
-            return DataResult.success(abstractListTag);
+            return DataResult.success(listTag);
         }
     }
 

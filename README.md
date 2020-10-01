@@ -1,5 +1,5 @@
 # Shadowed Config
-Includes Jankson and DFU and provides a jankson serializer, so you don't have to!
+Provides useful serialization, registry and configuration utilities.
 
 ## Setup
 Shadowed Config is on the JCenter. Loom automatically adds it as a repository. 
@@ -11,8 +11,8 @@ dependencies {
     include "io.github.legacy-fabric-community:shadowedconfig:<the latest version>"
 }
 ```
-
-Find the latest version at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config)
+[ ![Download](https://api.bintray.com/packages/boogiemonster1o1/cool-mods/Shadowed-Config/images/download.svg) ](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config/_latestVersion)  
+Find all versions at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config](https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Config)
 
 ## License
 
