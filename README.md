@@ -1,5 +1,5 @@
 # Shadowed Config
-Includes Jankson and DFU and provides a jankson serializer, so you don't have to!
+Provides useful serialization, registry and configuration utilities.
 
 ## Setup
 Shadowed Config is on the JCenter. Loom automatically adds it as a repository. 
