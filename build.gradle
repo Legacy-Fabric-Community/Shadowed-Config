@@ -59,7 +59,7 @@ dependencies {
     modImplementation ("net.fabricmc:fabric-loader-1.8.9:${project.loader_version}") {
         exclude module: "guava"
     }
-    modImplementation "net.fabricmc.fabric-api:fabric-api:0.7.3"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.8.2"
 
     modApi "com.mojang:datafixerupper:4.0.26"
     include "com.mojang:datafixerupper:4.0.26"
