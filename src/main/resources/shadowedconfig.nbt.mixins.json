@@ -1,0 +1,19 @@
+{
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "required": true,
+  "package": "io.github.legacy_fabric_community.shadowedconfig.nbt.mixin",
+  "mixins": [
+    "CompoundTagAccessor",
+    "EndTagAccessor",
+    "ListTagAccessor",
+    "NumberTagMixins$ByteTagMixin",
+    "NumberTagMixins$DoubleTagMixin",
+    "NumberTagMixins$FloatTagMixin",
+    "NumberTagMixins$IntTagMixin",
+    "NumberTagMixins$LongTagMixin",
+    "NumberTagMixins$ShortTagMixin",
+    "TagAccessor"
+  ]
+}

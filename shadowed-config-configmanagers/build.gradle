@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":shadowed-config-jankson")
+    implementation project(":shadowed-config-nbt")
+}

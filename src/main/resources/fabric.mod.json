@@ -18,8 +18,9 @@
   "depends": {
     "fabricloader": ">=0.7.4"
   },
-  "accessWidener": "shadowedconfig.accesswidener",
   "mixins": [
-    "shadowedconfig.mixins.json"
+    "shadowedconfig.codecs.mixins.json",
+    "shadowedconfig.registries.mixins.json",
+    "shadowedconfig.nbt.mixins.json"
   ]
 }

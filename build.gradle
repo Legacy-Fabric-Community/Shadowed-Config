@@ -87,6 +87,7 @@ dependencies {
     shade "blue.endless:jankson:1.1.0"
     shade 'it.unimi.dsi:fastutil:7.1.0'
     subprojects.each {
+        implementation ":${it.path}"
         shade ":${it.path}"
     }
 }

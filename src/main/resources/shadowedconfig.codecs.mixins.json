@@ -1,0 +1,11 @@
+{
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "required": true,
+  "package": "io.github.legacy_fabric_community.shadowedconfig.codecs.mixin",
+  "mixins": [
+    "BiomeAccessor",
+    "BlockEntityAccessor"
+  ]
+}
