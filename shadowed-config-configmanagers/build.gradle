@@ -1,4 +1,5 @@
 dependencies {
-    implementation project(":shadowed-config-jankson")
-    implementation project(":shadowed-config-nbt")
+    compileOnly project(":shadowed-config-codecs")
+    compileOnly project(":shadowed-config-jankson")
+    compileOnly project(":shadowed-config-nbt")
 }

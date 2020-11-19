@@ -7,10 +7,11 @@ import java.nio.file.Path;
 import java.util.Objects;
 
 import blue.endless.jankson.Jankson;
+import blue.endless.jankson.JsonElement;
 import blue.endless.jankson.JsonObject;
 import blue.endless.jankson.impl.SyntaxError;
 import com.mojang.serialization.Codec;
-import io.github.legacy_fabric_communiy.shadowedconfig.jankson.JanksonOps;
+import io.github.legacy_fabric_community.shadowedconfig.jankson.JanksonOps;
 
 public class JanksonConfigManager<T> extends ConfigManager<T> {
 	private static final Jankson JANKSON = Jankson.builder().build();
@@ -69,6 +70,6 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
 	}
 
 	public void serialize(T config) throws IOException {
-		Files.write(this.configPath, this.getCodec().encodeStart(JanksonOps.INSTANCE, config).getOrThrow(false, PRINT_TO_STDERR).toJson().getBytes(StandardCharsets.UTF_8));
+		Files.write(this.configPath, this.getCodec().<JsonElement>encodeStart(JanksonOps.INSTANCE, config).getOrThrow(false, PRINT_TO_STDERR).toJson().getBytes(StandardCharsets.UTF_8));
 	}
 }

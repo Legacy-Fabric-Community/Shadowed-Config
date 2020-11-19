@@ -23,7 +23,7 @@ public class Int2ObjectArrayMap<K> implements Registry<Integer, K> {
 
 	public Int2ObjectArrayMap(int i) {
 		i = (int) ((float) i / 0.8F);
-		this.values = (K[]) Lists.<K>newArrayListWithCapacity(i).toArray();
+		this.values = (K[]) new Object[i];
 		this.ids = new int[i];
 		this.idToValues = (K[]) Lists.<K>newArrayListWithCapacity(i).toArray();
 	}

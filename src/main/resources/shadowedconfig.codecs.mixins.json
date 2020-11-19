@@ -7,5 +7,6 @@
   "mixins": [
     "BiomeAccessor",
     "BlockEntityAccessor"
-  ]
+  ],
+  "refmap": "shadowedconfig-codecs-refmap.json"
 }

@@ -15,5 +15,6 @@
     "NumberTagMixins$LongTagMixin",
     "NumberTagMixins$ShortTagMixin",
     "TagAccessor"
-  ]
+  ],
+  "refmap": "shadowedconfig-nbt-refmap.json"
 }

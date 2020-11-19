@@ -6,5 +6,6 @@
   "package": "io.github.legacy_fabric_community.shadowedconfig.registries.mixin",
   "mixins": [
     "SimpleRegistryMixin"
-  ]
+  ],
+  "refmap": "shadowedconfig-registries-refmap.json"
 }

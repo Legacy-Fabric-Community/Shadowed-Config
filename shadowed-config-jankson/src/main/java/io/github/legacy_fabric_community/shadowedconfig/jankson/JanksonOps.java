@@ -1,4 +1,4 @@
-package io.github.legacy_fabric_communiy.shadowedconfig.jankson;
+package io.github.legacy_fabric_community.shadowedconfig.jankson;
 
 import java.math.BigDecimal;
 import java.util.List;

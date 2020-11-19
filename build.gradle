@@ -79,16 +79,34 @@ configurations {
     shade
 }
 
-tasks.remapJar.dependsOn(shadowJar)
-(tasks.remapJar.input as FileSystemLocationProperty<? extends FileSystemLocation>).set(shadowJar.archivePath)
-
 dependencies {
-    shade "com.mojang:datafixerupper:4.0.26"
+    shade("com.mojang:datafixerupper:4.0.26") {
+        exclude group: 'com.google.code.findbugs'
+        exclude group: 'com.google.code.gson'
+        exclude group: 'com.google.guava'
+        exclude group: 'org.apache.commons'
+        exclude group: 'org.apache.logging.log4j'
+    }
     shade "blue.endless:jankson:1.1.0"
     shade 'it.unimi.dsi:fastutil:7.1.0'
     subprojects.each {
-        implementation ":${it.path}"
-        shade ":${it.path}"
+        shade(project(":${it.path}")) {
+            exclude group: 'net.fabricmc.fabric-api'
+            exclude group: 'net.fabricmc'
+            exclude group: 'com.google.code.findbugs' 
+            exclude group: 'com.google.guava' 
+            exclude group: 'org.apache.commons' 
+            exclude group: 'org.apache.logging.log4j' 
+            exclude group: 'net.minecrell' 
+        }
+    }
+}
+
+jar {
+    configurations.shade.each {
+        from (project.zipTree(it)) {
+            exclude 'META-INF', 'META-INF/**'
+        }
     }
 }
 
@@ -167,17 +185,4 @@ bintray {
             }
         }
     }
-}
-
-shadowJar {
-    dependencies {
-        exclude(dependency('com.mojang:minecraft:.*'))
-        exclude(dependency('net.fabricmc:.*:.*'))
-        exclude(dependency('com.google.code.findbugs:.*:.*'))
-        exclude(dependency('com.google.code.gson:.*:.*'))
-        exclude(dependency('com.google.guava:.*:.*'))
-        exclude(dependency('org.apache.commons:.*:.*'))
-        exclude(dependency('org.apache.logging.log4j:.*:.*'))
-    }
-    configurations = [project.configurations.shade]
 }
