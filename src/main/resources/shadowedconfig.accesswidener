@@ -1,4 +1,0 @@
-accessWidener v1 named
-# TODO: remove these access wideners
-extendable method net/minecraft/nbt/Tag write (Ljava/io/DataOutput;)V
-extendable method net/minecraft/nbt/Tag read (Ljava/io/DataInput;ILnet/minecraft/nbt/PositionTracker;)V
