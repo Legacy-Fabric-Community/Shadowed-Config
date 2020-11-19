@@ -13,14 +13,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.stream.IntStream;
-import java.util.stream.LongStream;
 import java.util.stream.Stream;
 
-import io.github.legacy_fabric_community.serialization.codec.ExtendedOps;
-import io.github.legacy_fabric_community.serialization.mixin.CompoundTagAccessor;
-import io.github.legacy_fabric_community.serialization.mixin.EndTagAccessor;
-import io.github.legacy_fabric_community.serialization.mixin.ListTagAccessor;
-import io.github.legacy_fabric_community.serialization.mixin.TagAccessor;
 import com.google.common.collect.Iterators;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -32,6 +26,11 @@ import com.mojang.serialization.DynamicOps;
 import com.mojang.serialization.MapLike;
 import com.mojang.serialization.RecordBuilder;
 import com.mojang.serialization.RecordBuilder.AbstractStringBuilder;
+import io.github.legacy_fabric_community.serialization.codec.ExtendedOps;
+import io.github.legacy_fabric_community.serialization.mixin.CompoundTagAccessor;
+import io.github.legacy_fabric_community.serialization.mixin.EndTagAccessor;
+import io.github.legacy_fabric_community.serialization.mixin.ListTagAccessor;
+import io.github.legacy_fabric_community.serialization.mixin.TagAccessor;
 
 import net.minecraft.nbt.ByteArrayTag;
 import net.minecraft.nbt.ByteTag;
@@ -57,13 +56,9 @@ public class NbtOps implements ExtendedOps<Tag> {
     }
 
     private static Tag createListTag(byte b, byte c) {
-        if (matches(b, c, (byte) 4)) {
-            return new LongArrayTag(new long[0]);
-        } else if (matches(b, c, (byte) 1)) {
+        if (matches(b, c, (byte) 1)) {
             return new ByteArrayTag(new byte[0]);
-        } else {
-            return matches(b, c, (byte) 3) ? new IntArrayTag(new int[0]) : new ListTag();
-        }
+        }return matches(b, c, (byte) 3) ? new IntArrayTag(new int[0]) : new ListTag();
     }
 
     private static boolean matches(byte b, byte c, byte d) {
@@ -116,8 +111,6 @@ public class NbtOps implements ExtendedOps<Tag> {
                 return this.convertMap(dynamicOps, tag);
             case NbtType.INT_ARRAY:
                 return dynamicOps.createIntList(Arrays.stream(((IntArrayTag) tag).getIntArray()));
-            case NbtType.LONG_ARRAY:
-                return dynamicOps.createLongList(Arrays.stream(((LongArrayTag) tag).getArray()));
             default:
                 throw new IllegalStateException("Unknown tag type: " + tag);
         }
@@ -324,14 +317,6 @@ public class NbtOps implements ExtendedOps<Tag> {
         return new IntArrayTag(intStream.toArray());
     }
 
-    public DataResult<LongStream> getLongStream(Tag tag) {
-        return tag instanceof LongArrayTag ? DataResult.success(Arrays.stream(((LongArrayTag) tag).getArray())) : ExtendedOps.super.getLongStream(tag);
-    }
-
-    public Tag createLongList(LongStream longStream) {
-        return new LongArrayTag(longStream.toArray());
-    }
-
     public Tag createList(Stream<Tag> stream) {
         PeekingIterator<Tag> peekingIterator = Iterators.peekingIterator(stream.iterator());
         if (!peekingIterator.hasNext()) {
@@ -353,13 +338,6 @@ public class NbtOps implements ExtendedOps<Tag> {
                     arr[a] = (int) list3.get(a);
                 }
                 return new IntArrayTag(arr);
-            } else if (tag instanceof LongTag) {
-                list3 = Lists.newArrayList(Iterators.transform(peekingIterator, (tagx) -> tagx != null ? ((LongTag) tagx).getLong() : 0));
-                long[] arr = new long[list3.size()];
-                for (int a = 0; a < arr.length; a++) {
-                    arr[a] = (long) list3.get(a);
-                }
-                return new LongArrayTag(arr);
             } else {
                 ListTag listTag = new ListTag();
 
@@ -387,7 +365,7 @@ public class NbtOps implements ExtendedOps<Tag> {
     }
 
     public String toString() {
-        return "NBT";
+        return "Nbt";
     }
 
     public RecordBuilder<Tag> mapBuilder() {
