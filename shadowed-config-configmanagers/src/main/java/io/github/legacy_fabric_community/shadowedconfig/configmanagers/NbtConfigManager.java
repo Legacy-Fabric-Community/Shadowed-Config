@@ -27,7 +27,7 @@ public class NbtConfigManager<T> extends ConfigManager<T> {
 	}
 
 	@Override
-	protected void writeDefaultData() throws IOException {
+	public void writeDefaultData() throws IOException {
 
 	}
 
