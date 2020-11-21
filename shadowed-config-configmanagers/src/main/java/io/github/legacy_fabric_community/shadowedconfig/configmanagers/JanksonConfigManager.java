@@ -28,7 +28,7 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
 
 	protected JanksonConfigManager(Path configPath, Codec<T> codec, JsonObject defaultValue) {
 		this(configPath, codec);
-		this.defaultValue = codec.decode(JanksonOps.INSTANCE, Objects.requireNonNull(defaultValue)).getOrThrow(false, PRINT_TO_STDERR).getFirst();
+		this.defaultValue = codec.decode(JanksonOps.instance(), Objects.requireNonNull(defaultValue)).getOrThrow(false, PRINT_TO_STDERR).getFirst();
 	}
 
 	@Override
@@ -36,7 +36,7 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
 		Files.write(
 				this.configPath,
 				this.codec.encodeStart(
-						JanksonOps.INSTANCE,
+						JanksonOps.instance(),
 						this.config
 				)
 						.getOrThrow(
@@ -54,7 +54,7 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
 	@Override
 	public void deserialize() throws IOException {
 		try {
-			this.config = this.codec.decode(JanksonOps.INSTANCE, JANKSON.load(Files.newInputStream(this.configPath))).getOrThrow(false, PRINT_TO_STDERR).getFirst();
+			this.config = this.codec.decode(JanksonOps.instance(), JANKSON.load(Files.newInputStream(this.configPath))).getOrThrow(false, PRINT_TO_STDERR).getFirst();
 		} catch (SyntaxError syntaxError) {
 			throw new IOException(syntaxError);
 		}
@@ -64,12 +64,12 @@ public class JanksonConfigManager<T> extends ConfigManager<T> {
 	protected void writeDefaultData() throws IOException {
 		byte[] bytes = "{}".getBytes(StandardCharsets.UTF_8);
 		if (this.defaultValue != null) {
-			bytes = this.codec.encodeStart(JanksonOps.INSTANCE, this.defaultValue).getOrThrow(false, PRINT_TO_STDERR).toJson(true, true).getBytes(StandardCharsets.UTF_8);
+			bytes = this.codec.encodeStart(JanksonOps.instance(), this.defaultValue).getOrThrow(false, PRINT_TO_STDERR).toJson(true, true).getBytes(StandardCharsets.UTF_8);
 		}
 		Files.write(this.configPath, bytes);
 	}
 
 	public void serialize(T config) throws IOException {
-		Files.write(this.configPath, this.getCodec().<JsonElement>encodeStart(JanksonOps.INSTANCE, config).getOrThrow(false, PRINT_TO_STDERR).toJson().getBytes(StandardCharsets.UTF_8));
+		Files.write(this.configPath, this.getCodec().<JsonElement>encodeStart(JanksonOps.instance(), config).getOrThrow(false, PRINT_TO_STDERR).toJson().getBytes(StandardCharsets.UTF_8));
 	}
 }
