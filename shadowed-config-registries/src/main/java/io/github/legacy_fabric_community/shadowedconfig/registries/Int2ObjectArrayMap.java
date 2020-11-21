@@ -13,8 +13,10 @@ import com.google.common.collect.Lists;
 import net.minecraft.util.registry.Registry;
 
 @SuppressWarnings("unchecked")
+// TODO: port this to scala
+// TODO: the reason why its so hard is because of the arrays
 public class Int2ObjectArrayMap<K> implements Registry<Integer, K> {
-	private static final Object empty = null;
+	private static final Object NULL = null;
 	private K[] values;
 	private int[] ids;
 	private K[] idToValues;
@@ -115,7 +117,7 @@ public class Int2ObjectArrayMap<K> implements Registry<Integer, K> {
 				return k;
 			}
 
-			if (this.values[k] == empty) {
+			if (this.values[k] == NULL) {
 				return -1;
 			}
 		}
@@ -125,7 +127,7 @@ public class Int2ObjectArrayMap<K> implements Registry<Integer, K> {
 				return k;
 			}
 
-			if (this.values[k] == empty) {
+			if (this.values[k] == NULL) {
 				return -1;
 			}
 		}
@@ -136,13 +138,13 @@ public class Int2ObjectArrayMap<K> implements Registry<Integer, K> {
 	private int findFree(int i) {
 		int k;
 		for (k = i; k < this.values.length; ++k) {
-			if (this.values[k] == empty) {
+			if (this.values[k] == NULL) {
 				return k;
 			}
 		}
 
 		for (k = 0; k < i; ++k) {
-			if (this.values[k] == empty) {
+			if (this.values[k] == NULL) {
 				return k;
 			}
 		}

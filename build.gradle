@@ -16,6 +16,7 @@ plugins {
 apply plugin: 'com.jfrog.bintray'
 
 allprojects {
+    apply plugin: 'scala'
     apply plugin: 'java'
     apply plugin: 'fabric-loom'
 
@@ -68,6 +69,9 @@ allprojects {
             exclude group: 'com.google.code.gson'
             exclude group: 'com.google.guava'
             exclude group: 'org.apache.commons'
+        }
+        modApi("net.fabricmc:fabric-language-scala:0.3.2.+") {
+            exclude group: 'net.fabricmc'
         }
         implementation "blue.endless:jankson:1.1.0"
     }
