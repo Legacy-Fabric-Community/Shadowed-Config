@@ -2,14 +2,11 @@ package io.github.legacy_fabric_community.shadowedconfig.configmanagers
 
 import java.io.IOException
 import java.nio.charset.StandardCharsets
-import java.nio.file.Files
-import java.nio.file.Path
-import java.util.{Objects, Optional}
+import java.nio.file.{Files, Path}
 import java.util.function.Consumer
+import java.util.{Objects, Optional}
 
-import blue.endless.jankson.Jankson
-import blue.endless.jankson.JsonElement
-import blue.endless.jankson.JsonObject
+import blue.endless.jankson.{Jankson, JsonElement, JsonObject}
 import blue.endless.jankson.impl.SyntaxError
 import com.mojang.serialization.Codec
 import io.github.legacy_fabric_community.shadowedconfig.configmanagers.JanksonConfigManager.PRINT_TO_STDERR
@@ -19,13 +16,13 @@ import io.github.legacy_fabric_community.shadowedconfig.jankson.JanksonOps
 object JanksonConfigManager {
 	private val JANKSON = Jankson.builder.build
 
-	protected val PRINT_TO_STDERR: Consumer[String] = (str: String) => {
+	private val PRINT_TO_STDERR: Consumer[String] = (str: String) => {
 		println(str)
 	}
 }
 
-class JanksonConfigManager[T] private(override val configPath: Path, override val codec: Codec[T]) extends ConfigManager[T](configPath, codec) {
-	private var defaultValue : T = _
+class JanksonConfigManager[T] (override val configPath: Path, override val codec: Codec[T]) extends ConfigManager[T](configPath, codec) {
+	private var defaultValue: T = _
 
 	def this(configPath: Path, codec: Codec[T], defaultValue: T) {
 		this(configPath, codec)
@@ -60,6 +57,6 @@ class JanksonConfigManager[T] private(override val configPath: Path, override va
 
 	@throws[IOException]
 	def serialize(config: T): Unit = {
-		Files.write(this.configPath, this.getCodec.encodeStart[JsonElement](JanksonOps, config).getOrThrow(false, PRINT_TO_STDERR).toJson.getBytes(StandardCharsets.UTF_8))
+		Files.write(this.configPath, this.codec.encodeStart[JsonElement](JanksonOps, config).getOrThrow(false, PRINT_TO_STDERR).toJson.getBytes(StandardCharsets.UTF_8))
 	}
 }

@@ -27,8 +27,6 @@ abstract class ConfigManager[T] protected(val configPath: Path, val codec: Codec
 
 	final def getConfigPath: Path = this.configPath
 
-	final def getCodec: Codec[T] = this.codec
-
 	final def getConfig: T = this.config.get()
 
 	@throws[IOException]
