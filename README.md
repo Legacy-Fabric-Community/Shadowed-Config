@@ -17,6 +17,7 @@ Find all versions at [https://bintray.com/boogiemonster1o1/cool-mods/Shadowed-Co
 ## Contributing
 - Use java only for mixins
 - Use scala for everything else
+- Use java classes (java.lang.List, java.lang.Iterable) instead of scala classes (scala.List, scala.Iterable)
 - For scala files, use **Tabs**, not two spaces
 - LF or bad
 
