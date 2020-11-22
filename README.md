@@ -4,6 +4,9 @@ Provides useful serialization, registry and configuration utilities.
 ## Setup
 Shadowed Config is on the JCenter. Loom automatically adds it as a repository. 
 
+Fabric-Language-Scala is also shipped with Shadowed Config as an exposed transitive dependency. 
+Please add it as a dependency if it did not get pulled. 
+
 Add the dependency 
 ```gradle
 dependencies {
