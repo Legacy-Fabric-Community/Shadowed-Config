@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.minecraft.util.IdList;
+import net.minecraft.util.collection.IdList;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.SimpleRegistry;
 
@@ -20,7 +20,7 @@ public abstract class SimpleRegistryMixin<K, V> implements Registry<K, V>, Codec
 	public abstract K getIdentifier(V object);
 
 	@Shadow
-	public abstract int getIndex(V object);
+	public abstract int getRawId(V object);
 
 	@Shadow
 	@Final
@@ -38,7 +38,7 @@ public abstract class SimpleRegistryMixin<K, V> implements Registry<K, V>, Codec
 			}).map(object -> Pair.of(object, ops.empty()));
 		}
 		// TODO: Is it safe to assume that K will always be an Identifier?
-		return StringMappedCodecs.IDENTIFIER.decode(ops, input).flatMap(pair -> {
+		return StringMappedCodecs.identifier().decode(ops, input).flatMap(pair -> {
 			//noinspection unchecked
 			V object = this.get((K) pair.getFirst());
 			return (object == null) ? DataResult.error("Unknown registry key: " + pair.getFirst()) : DataResult.success(Pair.of(object, pair.getSecond()), Lifecycle.stable());
@@ -51,7 +51,7 @@ public abstract class SimpleRegistryMixin<K, V> implements Registry<K, V>, Codec
 		if (identifier == null)
 			return DataResult.error("Unknown registry element " + input);
 		if (ops.compressMaps())
-			return ops.mergeToPrimitive(prefix, ops.createInt(this.getIndex(input))).setLifecycle(Lifecycle.experimental());
+			return ops.mergeToPrimitive(prefix, ops.createInt(this.getRawId(input))).setLifecycle(Lifecycle.experimental());
 		return ops.mergeToPrimitive(prefix, ops.createString(identifier.toString())).setLifecycle(Lifecycle.experimental());
 	}
 }

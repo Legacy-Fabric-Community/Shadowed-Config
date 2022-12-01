@@ -4,15 +4,15 @@ import io.github.legacy_fabric_community.shadowedconfig.nbt.NumericTag;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 
-import net.minecraft.nbt.ByteTag;
-import net.minecraft.nbt.DoubleTag;
-import net.minecraft.nbt.FloatTag;
-import net.minecraft.nbt.IntTag;
-import net.minecraft.nbt.LongTag;
-import net.minecraft.nbt.ShortTag;
+import net.minecraft.nbt.NbtByte;
+import net.minecraft.nbt.NbtDouble;
+import net.minecraft.nbt.NbtFloat;
+import net.minecraft.nbt.NbtInt;
+import net.minecraft.nbt.NbtLong;
+import net.minecraft.nbt.NbtShort;
 
 public class NumberTagMixins {
-	@Mixin(ShortTag.class)
+	@Mixin(NbtShort.class)
 	public static class ShortTagMixin implements NumericTag {
 		@Shadow
 		private short value;
@@ -23,7 +23,7 @@ public class NumberTagMixins {
 		}
 	}
 
-	@Mixin(DoubleTag.class)
+	@Mixin(NbtDouble.class)
 	public static class DoubleTagMixin implements NumericTag {
 		@Shadow
 		private double value;
@@ -34,7 +34,7 @@ public class NumberTagMixins {
 		}
 	}
 
-	@Mixin(FloatTag.class)
+	@Mixin(NbtFloat.class)
 	public static class FloatTagMixin implements NumericTag {
 		@Shadow
 		private float value;
@@ -45,7 +45,7 @@ public class NumberTagMixins {
 		}
 	}
 
-	@Mixin(ByteTag.class)
+	@Mixin(NbtByte.class)
 	public static class ByteTagMixin implements NumericTag {
 		@Shadow
 		private byte value;
@@ -56,7 +56,7 @@ public class NumberTagMixins {
 		}
 	}
 
-	@Mixin(IntTag.class)
+	@Mixin(NbtInt.class)
 	public static class IntTagMixin implements NumericTag {
 		@Shadow
 		private int value;
@@ -67,7 +67,7 @@ public class NumberTagMixins {
 		}
 	}
 
-	@Mixin(LongTag.class)
+	@Mixin(NbtLong.class)
 	public static class LongTagMixin implements NumericTag {
 		@Shadow
 		private long value;

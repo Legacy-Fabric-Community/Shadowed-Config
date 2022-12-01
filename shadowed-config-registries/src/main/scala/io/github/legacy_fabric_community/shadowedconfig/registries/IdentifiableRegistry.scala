@@ -3,10 +3,9 @@ package io.github.legacy_fabric_community.shadowedconfig.registries
 import java.util
 import java.util.stream.{Stream, StreamSupport}
 import java.util.{Optional, Random}
-
-import javax.annotation.Nullable
 import net.minecraft.util.Identifier
 import net.minecraft.util.registry.Registry
+import org.jetbrains.annotations.Nullable
 
 trait IdentifiableRegistry[T] extends Registry[Identifier, T] {
 	def getRandom(random: Random): Optional[T]

@@ -2,15 +2,14 @@ package io.github.legacy_fabric_community.shadowedconfig.registries
 
 import java.util
 import java.util.{Optional, Random}
-
 import com.google.common.collect.{BiMap, HashBiMap, ImmutableSet, Maps}
 import com.mojang.datafixers.util.Pair
 import com.mojang.serialization.{Codec, DataResult, DynamicOps, Lifecycle}
 import io.github.legacy_fabric_community.shadowedconfig.codecs.StringMappedCodecs
-import javax.annotation.{Nonnull, Nullable}
 import net.minecraft.util.Identifier
 import org.apache.commons.lang3.Validate
 import org.apache.logging.log4j.{LogManager, Logger}
+import org.jetbrains.annotations.{NotNull, Nullable}
 
 @SuppressWarnings(Array("unchecked")) object Registry {
 	private val DEFAULT_ENTRIES = Maps.newLinkedHashMap
@@ -70,7 +69,7 @@ import org.apache.logging.log4j.{LogManager, Logger}
 		this.add(key, value)
 	}
 
-	@Nonnull override def iterator: util.Iterator[T] = this.indexedEntries.iterator
+	@NotNull override def iterator: util.Iterator[T] = this.indexedEntries.iterator
 
 	override def decode[T1](ops: DynamicOps[T1], input: T1): DataResult[Pair[T, T1]] = {
 		if (ops.compressMaps) return ops.getNumberValue(input).flatMap((number: Number) => {
@@ -82,7 +81,7 @@ import org.apache.logging.log4j.{LogManager, Logger}
 
 			foo(number)
 		}).map((`object`: T) => Pair.of(`object`, ops.empty))
-		StringMappedCodecs.IDENTIFIER.decode(ops, input).flatMap((pair: Pair[Identifier, T1]) => {
+		StringMappedCodecs.identifier.decode(ops, input).flatMap((pair: Pair[Identifier, T1]) => {
 			def foo(pair: Pair[Identifier, T1]): DataResult[Pair[T, T1]] = {
 				val `object` = this.get(pair.getFirst)
 				if (`object` == null) DataResult.error("Unknown registry key: " + pair.getFirst)

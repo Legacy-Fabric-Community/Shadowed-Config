@@ -5,11 +5,11 @@ import java.util.List;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.gen.Accessor;
 
-import net.minecraft.nbt.ListTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtList;
 
-@Mixin(ListTag.class)
+@Mixin(NbtList.class)
 public interface ListTagAccessor {
 	@Accessor
-	List<Tag> getValue();
+	List<NbtElement> getValue();
 }

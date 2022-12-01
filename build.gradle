@@ -58,6 +58,7 @@ allprojects {
     dependencies {
         minecraft "com.mojang:minecraft:${project.minecraft_version}"
         mappings "net.legacyfabric:yarn:${project.yarn_mappings}:v2"
+        modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
         modImplementation ("net.legacyfabric.legacy-fabric-api:legacy-fabric-api:${fabric_version}") {
             exclude module: "legacy-fabric-entity-events-v1"
         }
@@ -71,7 +72,7 @@ allprojects {
             exclude group: 'net.fabricmc'
         }
         implementation "blue.endless:jankson:1.1.0"
-        
+
         if (lwjgl2) {
             if (currentOs.contains("mac")) {
                 implementation 'org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209'
@@ -84,7 +85,7 @@ allprojects {
             }
         }
     }
-    
+
     if (lwjgl2) {
     if (currentOs.contains("mac")) {
         configurations.all {
@@ -130,11 +131,11 @@ dependencies {
         shade(project(":${it.path}")) {
             exclude group: 'net.fabricmc.fabric-api'
             exclude group: 'net.fabricmc'
-            exclude group: 'com.google.code.findbugs' 
-            exclude group: 'com.google.guava' 
-            exclude group: 'org.apache.commons' 
-            exclude group: 'org.apache.logging.log4j' 
-            exclude group: 'net.minecrell' 
+            exclude group: 'com.google.code.findbugs'
+            exclude group: 'com.google.guava'
+            exclude group: 'org.apache.commons'
+            exclude group: 'org.apache.logging.log4j'
+            exclude group: 'net.minecrell'
         }
     }
 }

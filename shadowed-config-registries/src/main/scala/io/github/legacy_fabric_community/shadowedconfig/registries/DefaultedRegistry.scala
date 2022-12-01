@@ -1,9 +1,8 @@
 package io.github.legacy_fabric_community.shadowedconfig.registries
 
 import java.util.{Optional, Random}
-
-import javax.annotation.{Nonnull, Nullable}
 import net.minecraft.util.Identifier
+import org.jetbrains.annotations.{NotNull, Nullable}
 
 class DefaultedRegistry[T](val defaultId: Identifier) extends Registry[T] {
 	private var defaultValue = _
@@ -23,25 +22,25 @@ class DefaultedRegistry[T](val defaultId: Identifier) extends Registry[T] {
 		else i
 	}
 
-	@Nonnull override def getId(entry: T): Identifier = {
+	@NotNull override def getId(entry: T): Identifier = {
 		val identifier = super.getId(entry)
 		if (identifier == null) this.defaultId
 		else identifier
 	}
 
-	@Nonnull override def get(@Nullable id: Identifier): T = {
+	@NotNull override def get(@Nullable id: Identifier): T = {
 		val `object` = super.get(id)
 		if (`object` == null) this.defaultValue
 		else `object`
 	}
 
-	@Nonnull override def get(index: Int): T = {
+	@NotNull override def get(index: Int): T = {
 		val `object` = super.get(index)
 		if (`object` == null) this.defaultValue
 		else `object`
 	}
 
-	@Nonnull override def getRandom(random: Random): Optional[T] = {
+	@NotNull override def getRandom(random: Random): Optional[T] = {
 		val optional = super.getRandom(random)
 		if (optional.isPresent) Optional.of(this.defaultValue)
 		else optional
